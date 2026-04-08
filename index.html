@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>TVU — NAB 2026 Field Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #07090e;
+  --surf: #0c1018;
+  --card: #111720;
+  --card2: #141d28;
+  --border: #1a2535;
+  --border2: #243040;
+  --acc: #39ff6e;
+  --acc2: #00c2ff;
+  --acc3: #ff4d6d;
+  --acc4: #f59e0b;
+  --acc5: #a78bfa;
+  --text: #e4ecf5;
+  --muted: #5d7a90;
+  --mono: 'Space Mono', monospace;
+  --sans: 'DM Sans', sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;font-family:var(--sans);background:var(--bg);color:var(--text);font-size:15px;}
+
+/* ── HEADER ── */
+.header{
+  position:sticky;top:0;z-index:200;
+  background:var(--surf);
+  border-bottom:1px solid var(--border);
+  padding:10px 16px;
+  display:flex;gap:10px;align-items:center;
+}
+.logo-block{flex-shrink:0;}
+.logo-top{font-family:var(--mono);font-size:13px;font-weight:700;color:var(--acc);letter-spacing:.1em;}
+.logo-sub{font-family:var(--mono);font-size:9px;color:var(--muted);letter-spacing:.15em;margin-top:1px;}
+.search-wrap{flex:1;position:relative;}
+.search-wrap input{
+  width:100%;background:var(--card);border:1px solid var(--border);
+  color:var(--text);padding:9px 14px 9px 36px;border-radius:7px;
+  font-family:var(--sans);font-size:14px;outline:none;
+  transition:border-color .2s;
+}
+.search-wrap input:focus{border-color:var(--acc2);}
+.search-wrap input::placeholder{color:var(--muted);}
+.si{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:15px;pointer-events:none;}
+.badge-count{font-family:var(--mono);font-size:10px;color:var(--muted);white-space:nowrap;}
+
+/* ── TABS ── */
+.tabs{
+  display:flex;gap:4px;padding:8px 16px;
+  background:var(--surf);border-bottom:1px solid var(--border);
+  overflow-x:auto;scrollbar-width:none;
+}
+.tabs::-webkit-scrollbar{display:none;}
+.tab{
+  padding:5px 12px;border-radius:5px;border:1px solid var(--border);
+  background:transparent;color:var(--muted);font-size:11px;
+  font-family:var(--mono);cursor:pointer;white-space:nowrap;
+  transition:all .15s;letter-spacing:.06em;
+}
+.tab:hover{color:var(--text);border-color:var(--acc2);}
+.tab.active{background:var(--acc);color:#000;border-color:var(--acc);font-weight:700;}
+
+/* ── MAIN LAYOUT ── */
+.main{max-width:900px;margin:0 auto;padding:14px 16px 40px;}
+
+/* ── BANNER ── */
+.banner{
+  background:linear-gradient(135deg,#080f1c,#0a1828);
+  border:1px solid var(--acc2);border-radius:9px;
+  padding:14px 18px;margin-bottom:14px;
+}
+.banner-label{font-family:var(--mono);font-size:9px;color:var(--acc2);letter-spacing:.15em;margin-bottom:6px;}
+.banner-text{font-size:14px;line-height:1.65;color:var(--text);}
+.banner-text strong{color:var(--acc);}
+
+/* ── CARD GRID ── */
+.grid{display:grid;gap:10px;grid-template-columns:1fr;}
+@media(min-width:560px){.grid{grid-template-columns:1fr 1fr;}}
+@media(min-width:840px){.grid{grid-template-columns:1fr 1fr 1fr;}}
+
+/* ── CARD ── */
+.card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:9px;padding:16px;cursor:pointer;
+  transition:border-color .15s,transform .1s;
+  position:relative;overflow:hidden;
+}
+.card::before{
+  content:'';position:absolute;left:0;top:0;bottom:0;
+  width:3px;background:var(--c,var(--acc2));
+  border-radius:3px 0 0 3px;
+}
+.card:hover{border-color:var(--c,var(--acc2));transform:translateY(-1px);}
+
+.cat-row{display:flex;align-items:center;gap:7px;margin-bottom:9px;flex-wrap:wrap;}
+.cat-pill{
+  font-family:var(--mono);font-size:9px;letter-spacing:.1em;
+  padding:3px 7px;border-radius:4px;
+  background:rgba(0,0,0,.4);border:1px solid var(--c,var(--acc2));
+  color:var(--c,var(--acc2));white-space:nowrap;flex-shrink:0;
+}
+.tag{
+  font-family:var(--mono);font-size:9px;padding:2px 6px;
+  border-radius:3px;letter-spacing:.06em;white-space:nowrap;
+}
+.tag-latam{background:rgba(57,255,110,.1);color:var(--acc);border:1px solid var(--acc);}
+.tag-new{background:rgba(245,158,11,.1);color:var(--acc4);border:1px solid var(--acc4);}
+.tag-hot{background:rgba(255,77,109,.1);color:var(--acc3);border:1px solid var(--acc3);}
+.tag-poc{background:rgba(167,139,250,.1);color:var(--acc5);border:1px solid var(--acc5);}
+
+.card-title{font-size:15px;font-weight:700;line-height:1.3;color:var(--text);margin-bottom:7px;}
+.card-body{font-size:13px;color:#8aa4bc;line-height:1.6;}
+.card-body strong{color:var(--text);}
+.card-body .hl{background:rgba(0,194,255,.12);padding:1px 3px;border-radius:3px;}
+
+/* expanded */
+.card-extra{display:none;margin-top:12px;padding-top:12px;border-top:1px solid var(--border);}
+.card.open .card-extra{display:block;}
+.card-extra ul{list-style:none;display:flex;flex-direction:column;gap:7px;}
+.card-extra ul li{
+  font-size:13px;color:#8aa4bc;line-height:1.6;
+  padding-left:14px;position:relative;
+}
+.card-extra ul li::before{
+  content:'→';position:absolute;left:0;
+  color:var(--c,var(--acc2));font-size:11px;top:2px;
+}
+.card-extra ul li strong{color:var(--text);}
+
+/* table inside card */
+.mini-table{width:100%;border-collapse:collapse;font-size:11.5px;margin-top:8px;}
+.mini-table th{
+  background:rgba(255,255,255,.05);color:var(--muted);
+  font-family:var(--mono);font-size:9px;letter-spacing:.08em;
+  text-align:left;padding:5px 7px;border-bottom:1px solid var(--border2);
+}
+.mini-table td{padding:5px 7px;border-bottom:1px solid var(--border);color:#9ab4cc;vertical-align:top;}
+.mini-table td:first-child{color:var(--text);font-weight:500;}
+.mini-table tr:last-child td{border-bottom:none;}
+.mini-table .good{color:var(--acc);}
+.mini-table .bad{color:var(--acc3);}
+
+.hint{font-size:10px;color:var(--muted);text-align:right;margin-top:8px;font-family:var(--mono);}
+.card.open .hint{display:none;}
+
+/* empty */
+.empty{text-align:center;padding:60px 20px;color:var(--muted);font-family:var(--mono);font-size:12px;}
+
+/* schedule table */
+.sched-table{width:100%;border-collapse:collapse;font-size:12.5px;}
+.sched-table th{font-family:var(--mono);font-size:9px;letter-spacing:.08em;color:var(--muted);text-align:left;padding:5px 8px;border-bottom:1px solid var(--border2);}
+.sched-table td{padding:6px 8px;border-bottom:1px solid var(--border);color:#9ab4cc;}
+.sched-table td:first-child{color:var(--text);font-weight:500;}
+.sched-table .highlight-row td{color:var(--acc);}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="logo-block">
+    <div class="logo-top">TVU</div>
+    <div class="logo-sub">NAB 2026</div>
+  </div>
+  <div class="search-wrap">
+    <span class="si">⌕</span>
+    <input id="q" type="text" placeholder="Busca: satellite, reuters, sports, pricing, MicroApps…" autocomplete="off">
+  </div>
+  <div class="badge-count" id="cnt"></div>
+</div>
+
+<div class="tabs" id="tabs"></div>
+
+<div class="main">
+  <div class="banner" id="banner">
+    <div class="banner-label">⚡ ELEVATOR PITCH — NAB 2026</div>
+    <div class="banner-text">
+      <strong>"TVU Networks is the trusted partner helping broadcasters, sports orgs, and content creators navigate the AI-driven future of media."</strong>
+      Deep live production expertise + human-centric agentic platform + industry's most strategic partnerships.<br>
+      <span style="color:var(--muted);font-size:12px;">Booth: <strong style="color:var(--acc)">W1717</strong> · West Hall · Apr 19–22 · Hotel: Park MGM</span>
+    </div>
+  </div>
+
+  <div class="grid" id="grid"></div>
+  <div class="empty" id="empty" style="display:none">Sin resultados. Prueba otra búsqueda.</div>
+</div>
+
+<script>
+const C = {
+  LOGISTICS:'#f59e0b', PITCH:'#39ff6e', SPORTS:'#ff4d6d',
+  REUTERS:'#00c2ff', SAT:'#a78bfa', PRODUCT:'#10b981',
+  MICROAPPS:'#f97316', PLAYOUT:'#3b82f6', MARKETING:'#ec4899',
+  LATAM:'#39ff6e', PRICING:'#f59e0b', BOOTH:'#00c2ff',
+};
+
+const DATA = [
+  // ─── LOGISTICS ──────────────────────────────────────────────────────────
+  {
+    cat:'LOGISTICS', title:'Show Schedule & Booth Info',
+    tags:['hot'],
+    body:'Booth <strong>W1717</strong> · West Hall · Apr 19–22, 2026. Hotel: Park MGM.',
+    details:[
+      '<strong>Apr 17 (Fri):</strong> Setup tech team 8am–4pm',
+      '<strong>Apr 18 (Sat):</strong> Booth Training 2–4:30pm at W1717 · Company Dinner 6:30pm at Mon Ami Gabi',
+      '<strong>Apr 19 (Sun):</strong> Day 1 — 9:30am–6pm · Pre-show kickoff 9:30am',
+      '<strong>Apr 20 (Mon):</strong> Day 2 — 9am–6pm · Customer Event 4–6pm at booth',
+      '<strong>Apr 21 (Tue):</strong> Day 3 — 9am–6pm',
+      '<strong>Apr 22 (Wed):</strong> Day 4 — 9am–2pm · Dismantle after 2pm',
+      '<strong>Hotel:</strong> Park MGM · Check-in 3pm · Checkout 11am · Early check-in requested by Deanna',
+      '<strong>Attire:</strong> Business casual · No distressed jeans · No athletic shoes',
+      '<strong>Lead Retrieval:</strong> Hired hostess + marketing scanning badges',
+      '<strong>COVID test:</strong> Take day before departure — reimbursable',
+    ],
+    kw:'schedule logistics hotel park mgm booth training dinner day setup'
+  },
+  {
+    cat:'LOGISTICS', title:'Booth Layout & Demo Stations',
+    tags:[],
+    body:'5 demo zones: Reuters station (left), MediaMesh main demo, Sports station, 2 group stations (6+ pax), Creator photop.',
+    details:[
+      '<strong>Reuters Station (left):</strong> Satellite Replacement + RLSrt demo (Screen 1)',
+      '<strong>Scalable Live (screens 2-4):</strong> MediaMesh Platform Tools + Partner UIs (TAMS, HIVE, InSync, kinetiq, EMXL)',
+      '<strong>Sports Station:</strong> Athlete bib detection (Boston Marathon) · Auto-clipping (VSiN) · Sponsorship Verification (Scripps Sports)',
+      '<strong>2 Group Stations:</strong> Multi-purpose for any TVU solution, large meetings',
+      '<strong>Pixop Demo (back left):</strong> AI 4K HDR upscaling — MediaMesh partner spotlight',
+      '<strong>Creator Photop (back wall):</strong> City scene + empty pack for photos → tag TVU → win TVU Go month',
+      '<strong>Note:</strong> TVU Go NOT highlighted as product — creator reference only in video wall',
+      '<strong>QR codes</strong> throughout booth for brochures (limited print)',
+    ],
+    kw:'booth layout demo stations sports reuters mediamesh photop creator pixop'
+  },
+  {
+    cat:'LOGISTICS', title:'Partnerships at NAB',
+    tags:[],
+    body:'Geniox, T-Mobile, Tencent, AWS, Behind the Broadcast. Strategic visibility across West Hall.',
+    details:[
+      '<strong>Geniox:</strong> Present in TVU booth · Stickers on display',
+      '<strong>T-Mobile (W2859):</strong> Matt McEwen speaks on 5G network slicing + ABC News Sean Combs Trial coverage · Sun Apr 19 @ 2:45pm · Tue Apr 21 @ 12:45pm',
+      '<strong>Tencent (W3201):</strong> TVU branding in booth · Tencent on MediaMesh partners wall · TVU products featured',
+      '<strong>AWS (W1701):</strong> AWS interop in their booth · White paper by Mike Cronk available via QR in both booths',
+      '<strong>Behind the Broadcast:</strong> Instagram collab · Loaned pack for interview + live feeds to TVU Live Show in booth',
+    ],
+    kw:'partnerships t-mobile tencent aws geniox behind broadcast collaborations'
+  },
+
+  // ─── PITCH ──────────────────────────────────────────────────────────────
+  {
+    cat:'PITCH', title:'Elevator Pitch — 3 Versions',
+    tags:['hot'],
+    body:'One-liner, 30-sec, and 90-sec versions. Lead with AI + trust + partnership.',
+    details:[
+      '<strong>One Liner:</strong> "TVU Networks is the trusted partner helping broadcasters, sports organizations, and content creators navigate the AI-driven future of media — with the platform, the expertise, and the vision to move forward with confidence."',
+      '<strong>30 sec:</strong> "The media industry is evolving faster than ever. AI, cloud, and streaming are reshaping every workflow — and the pressure to keep up has never been greater. TVU Networks is the partner that helps you cut through the complexity. When the industry moves, TVU helps you lead."',
+      '<strong>90 sec key beats:</strong> Industry pressure (AI + cloud + live sports + creator economy) → You need a trusted partner → TVU brings deep live production expertise + agentic platform + strategic partnerships → Built for broadcasters, sports orgs, media companies → We help you lead, not just keep up.',
+      '<strong>Core message:</strong> Human-centric, agentic-assisted platform. Not just software — a partner.',
+    ],
+    kw:'elevator pitch one liner 30 second 90 second messaging value proposition'
+  },
+  {
+    cat:'PITCH', title:'MediaMesh Elevator Pitch',
+    tags:[],
+    body:'"Customer-led, Partner-centric." One platform. Any vendor. Any location. 13→21 partners IBC to NAB.',
+    details:[
+      'Customers <strong>effortlessly connect</strong> existing devices + third-party apps.',
+      'Rapid deployment of new features from TVU AND partners.',
+      'Access to 21 integrated services — no vendor lock-in.',
+      'Ultimate flexibility — cloud and on-premise, anywhere.',
+      '<strong>MediaMesh Build</strong> → define workflow at scale · <strong>Observe</strong> → monitor telemetry · <strong>Operate</strong> → apply changes to microservices',
+    ],
+    kw:'mediamesh pitch customer partner ecosystem workflow build observe operate'
+  },
+
+  // ─── SPORTS ─────────────────────────────────────────────────────────────
+  {
+    cat:'SPORTS', title:'TVU Sports — 3 Pillars',
+    tags:[],
+    body:'Live Events (reliability+scale) · Always On (content velocity) · Creators & Athletes (speed+simplicity).',
+    details:[
+      '<strong>LIVE EVENTS — Reliability + Scale:</strong> Contribution & routing at scale · REMI without scaling cost · Turnkey production partner packages. → "TVU makes live sports reliable at any scale, anywhere."',
+      '<strong>ALWAYS ON — Content Velocity:</strong> Acquisition from any device · Distribution hubs (all platforms simultaneously) · Broadcast-quality output with lean teams. → "More content. Fewer people. No quality compromise."',
+      '<strong>CREATORS & ATHLETES — Speed + Simplicity:</strong> Mobile-first capture & publish · Fast clipping to social · Monetization at scale. → "Broadcast-grade tools at the speed of social."',
+      '<strong>Target:</strong> Leagues, federations, major event broadcasters, sports networks, individual athletes',
+    ],
+    kw:'sports live events always on creators athletes remi velocity reliability scale'
+  },
+  {
+    cat:'SPORTS', title:'Sports Booth Demos (5 Use Cases)',
+    tags:['hot'],
+    body:'3 segments · 5 booth demos · 5+ athlete creators. Boston Marathon, VSiN, Scripps, Badgerland RSN, ESPN Gold Cup.',
+    details:[
+      '<strong>1. Athlete Bib Detection (Live Events):</strong> Boston Marathon — recorded content + potentially live on race day. Real-time athlete identification from broadcast feeds.',
+      '<strong>2. Auto Clipping Agent (Always On):</strong> VSiN (Top US Sports Gambling Network) — feed segmentation, auto-created events, titles & tags in Search (Agenda view), workflow mapping.',
+      '<strong>3. Sponsorship Verification (Live Events):</strong> Scripps Sports — logo detection, keyword mentions & reporting via Search profile + results. Recorded content demo.',
+      '<strong>4. Always On Ecosystem (Always On):</strong> Badgerland Sports — Full RSN deployment. Acquisition (Packs + App) → Distribution (MH + Grid) → Playout (Channel). <strong>Channel launches August 1st.</strong>',
+      '<strong>5. Event Use Case (Live Events):</strong> ESPN Gold Cup · Road to FIFA 2026 — acquisition via Packs → cloud ingest → content ID via TVU Search → signal routing via MediaHub. Workflow deploys at FIFA World Cup 2026.',
+    ],
+    kw:'sports demos bib detection auto clipping sponsorship badgerland rsn espn gold cup fifa boston marathon vsin scripps'
+  },
+  {
+    cat:'SPORTS', title:'Athlete Creator Proof Points',
+    tags:[],
+    body:'Super Bowl LX, Tyrese Halliburton, Kyrie Irving. TVU as broadcast backbone for athlete-led media.',
+    details:[
+      '<strong>Super Bowl LX:</strong> Ochocinco · Shannon Sharpe · James Harrison · Joe Haden — Remote production for athlete-led commentary & interviews · Broadcast-grade output without a studio · Multi-athlete, multi-location simultaneous feeds.',
+      '<strong>Tyrese Halliburton:</strong> NBA Finals star + All Star + Olympic Gold Medal winner. Connectivity, DJ sets & IRL streaming. TVU as backbone for athlete-owned content.',
+      '<strong>Kyrie Irving:</strong> NBA All Star Game brand event production. TVU as infrastructure for high-profile athlete brand activations.',
+      '<strong>The message:</strong> "We don\'t sell to athletes. We support the infrastructure around them — that\'s what makes TVU the broadcast backbone for athlete-led media."',
+    ],
+    kw:'athlete creator super bowl halliburton kyrie ochocinco shannon sharpe proof points'
+  },
+
+  // ─── REUTERS ────────────────────────────────────────────────────────────
+  {
+    cat:'REUTERS', title:'Reuters at NAB — Two Stories',
+    tags:['hot'],
+    body:'Story 1: Satellite Replacement (happening now). Story 2: Scalable Live (what comes next). Contacts: Joseph Delshadian (Content Distribution) · Mark Hooper (Solutions Architect).',
+    details:[
+      '<strong>Story 1 — Satellite Replacement (Foundation):</strong> Migrating global live news distribution (RLS satellite feed) to IP via TVU MediaHub + TVU NOC. First region live, global rollout in progress. Benefits: better signal quality, built-in redundancy, software-defined flexibility, lower TCO.',
+      '<strong>Story 2 — Scalable Live (Evolution):</strong> Next phase — dynamic distribution for modern newsrooms. Multiple live events simultaneously · instant distribution to broadcast + digital · scales on demand.',
+      '<strong>Booth setup:</strong> Screen 1 (left) = Satellite Migration via RLSrt · Screens 2–4 = Scalable Live / MediaMesh Platform Tools + Partner UIs.',
+      '<strong>RLS =</strong> Reuters 24/7 "Highlight" Live Signal over Satellite. <strong>RLSrt =</strong> TVU MediaHub + TVU NOC powered SRT version of RLS.',
+      '<strong>Current contract:</strong> RLSrt. HLS, Grid, Agent under negotiation → commercial lead: JC Albou.',
+      '<strong>Deal:</strong> $1.59M (2026–2030) in HubSpot.',
+      '<strong>Reuters current limits:</strong> 1 satellite channel + 6 online channels. Fixed capacity, no dynamic scaling, static routing.',
+    ],
+    kw:'reuters satellite scalable live rls rlsrt mediahub noc jc albou joseph delshadian mark hooper'
+  },
+  {
+    cat:'REUTERS', title:'Reuters Scalable Live — MVP Architecture',
+    tags:['poc'],
+    body:'PoC: May 2026. Stack: TVU Mediahub + TAMS + InSync + kinetiq + EMXL + HIVE. Infinite News streams, same pipeline.',
+    details:[
+      '<strong>MVP at NAB 2026:</strong> TVU Mediahub → MediaMesh (M) → TAMS (built on) → InSync → kinetiq → TVU Mediahub. HIVE connected to TAMS.',
+      '<strong>PoC May 2026 full stack:</strong> Reuters Live (MXL + other IP) → TVU Mediahub → MediaMesh QC Suite → TVU Producer + editorial tools → TAMS → InSync → kinetiq → TVU Mediahub → MXL → Reuters clients.',
+      '<strong>Industry Standards:</strong> MXL + TAMS — "No vendor lock-in · Standards alignment · Future compatibility."',
+      '<strong>MediaMesh Platform Tools:</strong> Build (define workflow at scale) · Observe (monitor + notify telemetry) · Operate (apply changes to microservices).',
+      '<strong>Cloud Use Case:</strong> Breaking News 1 → MediaMesh → Clients worldwide · Breaking News N → same pipeline. Infinite streams, same architecture.',
+    ],
+    kw:'reuters scalable live poc may 2026 tams insync kinetiq emxl hive mediamesh workflow architecture'
+  },
+
+  // ─── SATELLITE REPLACEMENT ──────────────────────────────────────────────
+  {
+    cat:'SAT', title:'Why Satellite Must Move to IP',
+    tags:['latam'],
+    body:'5G interference, orbital consolidation, aging IRDs, content security gaps. Industry has moved — BBC, Reuters, CNN, ABC NewsOne.',
+    details:[
+      '<strong>Spectrum Under Siege:</strong> FCC C-Band reallocation for 5G (NAM) · LATAM: 5G interference disrupting repeater stations near borders.',
+      '<strong>Orbital Consolidation:</strong> SES-Intelsat merger → 96% of US C-Band in fewer hands → less leverage, rising costs, declining flexibility.',
+      '<strong>Aging Infrastructure:</strong> IRD fleets cost $1,500–$2,500/unit to maintain · Veteran RF engineers retiring · HD/UHD upgrade doubles transponder bandwidth + cost.',
+      '<strong>Content Security Gap:</strong> Satellite: rogue receivers undetectable. IP: per-endpoint ID, server-side watermarking, anti-piracy controls at scale.',
+      '<strong>New Revenue Unlocked:</strong> IP enables ad regionalization, FAST channels, OTT — impossible with satellite. Customers already asking: Ole Comm, Televisa.',
+      '<strong>Who has moved:</strong> BBC World Service, Reuters, ABC NewsOne, CNN. LTN + Appear collaborating. MediaKind launching IP portals.',
+    ],
+    kw:'satellite why move ip 5g spectrum irds aging security fast ott televisa ole'
+  },
+  {
+    cat:'SAT', title:'What We Sell — TVU Grid + MediaHub',
+    tags:['latam'],
+    body:'Two layers: TVU Grid (transport engine, 500+ PoPs, 99.99% uptime) + TVU MediaHub (management + gateway layer, protocol conversion).',
+    details:[
+      '<strong>TVU Grid — Transport Engine:</strong> 500+ global PoPs · ISSP proprietary transport + encryption · 99.99% uptime (0 global outages in 10+ years) · ISX multi-path bonding (Starlink + 5G + wired) · H.265 at 5 Mbps CBR · Multi-cloud: Linode + AWS failover.',
+      '<strong>TVU MediaHub — Management Layer:</strong> Customer-facing UI for all operations · Protocol conversion: SRT, Zixi, RIST, ISSP, HLS, RTMP · No rip-and-replace of existing receivers · Stream provisioning & monitoring · Transcoding & adaptive bitrate · Single pane of glass.',
+      '<strong>Redundancy:</strong> Dual encoder + cloud failover · Latency: 1–2 seconds (vs 30s+ satellite) · Provisioning: hours not weeks.',
+    ],
+    kw:'satellite grid mediahub issp transport pops uptime protocol srt zixi rist hls rtmp'
+  },
+  {
+    cat:'SAT', title:'Economics — Satellite vs TVU IP',
+    tags:['latam','hot'],
+    body:'Based on 4 channels to 100 cable operators. Always compare to HD satellite upgrade — not SD. TVU saves 20–37% + unlocks new revenue.',
+    extra:'table',
+    tableData:{
+      heads:['','Satellite SD','Satellite HD Upgrade','TVU IP (HD H.265)'],
+      rows:[
+        ['Quality','SD / MPEG-2','HD / H.264','HD / H.265'],
+        ['Bitrate/ch','2 Mbps','8–15 Mbps','3–5 Mbps'],
+        ['Annual Service','$320K/yr','$500K–$640K/yr','$400K/yr'],
+        ['Hardware','Existing IRDs','$150K–$250K (new)','$200K–$300K (TVU)'],
+        ['Provisioning','2–4 weeks','2–4 weeks','1–3 days'],
+        ['Failover','5–15 min (manual)','5–15 min (manual)','<1 sec (automatic)'],
+        ['Future Revenue','None','None','Ad region. / FAST / OTT'],
+      ]
+    },
+    details:[
+      '<strong>KEY POSITIONING:</strong> ALWAYS compare to HD satellite upgrade cost — not current SD. TVU delivers HD at 20–37% savings.',
+      '<strong>Plus:</strong> Real-time monitoring, instant provisioning, and new revenue streams (ad regionalization, FAST, OTT).',
+      '<strong>Reference scenario:</strong> Televicentro Honduras — 4 channels to 100 cable operators (400 streams).',
+    ],
+    kw:'economics satellite pricing cost comparison hd sd tvuip savings annual service hardware'
+  },
+  {
+    cat:'SAT', title:'ISX — Why We Win Where Others Fail',
+    tags:[],
+    body:'Multi-path bonding: Cellular + Internet + Starlink + 5G. Auto failover <1 sec. 500+ global PoPs managed.',
+    details:[
+      '<strong>vs SRT/Zixi/RIST:</strong> Those protocols use single path — if it drops, stream dies. ISX bonds multiple connections so even if one fails, stream continues.',
+      '<strong>Multi-path bonding:</strong> Cellular + Internet + Starlink + 5G simultaneously.',
+      '<strong>Auto failover:</strong> <1 second (vs manual or app-level with competitors).',
+      '<strong>Bad internet resilience:</strong> Bonds weak links into reliable pipe (competitors degrade or freeze).',
+      '<strong>Managed PoP network:</strong> 500+ global (competitors must build their own infrastructure).',
+      '<strong>Encryption:</strong> ISSP built-in proprietary. Backup: Starlink + 5G active-active or active-backup.',
+    ],
+    kw:'isx why win srt zixi rist multi-path bonding failover pops starlink 5g'
+  },
+  {
+    cat:'SAT', title:'Land & Expand — 3-Phase Approach',
+    tags:['latam'],
+    body:'Phase 1 (0–6mo): Pure satellite replacement. Phase 2 (6–12mo): Smart distribution. Phase 3 (12+): Full ecosystem.',
+    details:[
+      '<strong>Phase 1 — Pass-Through (0–6mo):</strong> Pure satellite replacement · Grid transport + MediaHub UI · 1:1 pipe replacement · $50–$120/stream/month + HW.',
+      '<strong>Phase 2 — Smart Distribution (6–12mo):</strong> Transcoding & ABR · Multi-protocol output · Ad regionalization · FAST channel creation.',
+      '<strong>Phase 3 — Full Ecosystem (12+mo):</strong> MediaMesh (any-to-any routing) · Producer (cloud production) · Partyline (cloud intercom) · MediaMind (AI content mgmt).',
+      '<strong>Hardware-as-a-Service:</strong> ~$100/month per unit lease → spreads capex, increases MRR. Ideal for price-sensitive markets (LATAM).',
+    ],
+    kw:'land expand phases satellite migration haas hardware service fast ott latam'
+  },
+  {
+    cat:'SAT', title:'Receiver Hardware — 3-Tier Model',
+    tags:['latam'],
+    body:'$300–$500 (1-ch) · ~$3,000 (4-ch 1U) · Premium (Enterprise). Hardware-as-a-Service: ~$100/mo/unit.',
+    details:[
+      '<strong>1-Channel Low-Cost Box ($300–$500):</strong> Small cable ops, DTV transmitters, remote sites. 67–80% cheaper than satellite IRDs ($1,500–$2,500).',
+      '<strong>4-Channel 1U Rack Unit (~$3,000):</strong> Cable headends receiving multiple channels. One box per operator — reduces install complexity.',
+      '<strong>Enterprise 4-Ch TVU Receiver (Premium):</strong> Full redundancy, advanced monitoring. For Discovery, Paramount+, Reuters. 10+ years proven 24/7.',
+      '<strong>HaaS option:</strong> ~$100/month per unit lease. Spreads capex, increases MRR. Ideal for price-sensitive markets.',
+    ],
+    kw:'receiver hardware tier pricing haas cable operators irds enterprise premium'
+  },
+  {
+    cat:'SAT', title:'Radio Distribution — Add-On Opportunity',
+    tags:['latam'],
+    body:'Many satellite customers also distribute radio on the same transponder. TVU replaces both. Ask every customer about radio.',
+    details:[
+      '<strong>Option A (Now):</strong> Embedded Audio — Mux radio into 16 audio channels of existing video stream. De-mux at receiver. Quick to deploy.',
+      '<strong>Option B (Post-NAB):</strong> ISX-Wrapped Audio — Each radio channel wrapped independently in ISX. Standard Grid access rights for selective distribution. No channel limit.',
+      '<strong>Bandwidth:</strong> 64–320 kbps per radio stream.',
+      '<strong>Opportunity:</strong> SBS (250+ US Hispanic affiliates) · Televicentro (100+ cable operators).',
+      '<strong>NEXT STEP:</strong> Ask every customer: "Do you also distribute radio via satellite?"',
+    ],
+    kw:'radio distribution satellite audio mux sbs televicentro isx opportunity'
+  },
+  {
+    cat:'SAT', title:'DTT+ — Terrestrial Transmitter Distribution',
+    tags:['latam'],
+    body:'Satellite feeds hundreds of remote TV transmitter sites (mountaintops, towers, rural). ISX + Starlink solves this at scale.',
+    details:[
+      '<strong>The Opportunity:</strong> Terrestrial TV networks use satellite to feed remote transmitter sites. Limited connectivity — exactly where ISX multi-path bonding excels.',
+      '<strong>ATSC 3.0 / DVB-T2 rollout:</strong> Every transmitter site needs reliable IP backhaul.',
+      '<strong>Americas (ATSC 3.0):</strong> Mexico, Brazil, Argentina leading. Televisa exploring IP for border transmitters affected by 5G.',
+      '<strong>Europe (DVB-T2):</strong> UK, France, Germany, Spain, Italy — remote sites in mountainous terrain.',
+      '<strong>APAC/MEA (DVB-T2/ISDB-T):</strong> Australia, India, Southeast Asia, Africa — Starlink changes the game.',
+      '<strong>ISX bonds</strong> Starlink + cellular + local connectivity → reliable feed to every site, no matter how remote.',
+    ],
+    kw:'dtt terrestrial transmitter atsc dvb starlink remote sites mexico televisa border'
+  },
+  {
+    cat:'SAT', title:'Satellite Proof Points — Who Is Already Doing This',
+    tags:['latam'],
+    body:'Reuters · ABC NewsOne · CNN Newsource · Ole Communications · JMC · Televisa. Use these as references.',
+    details:[
+      '<strong>Reuters:</strong> Global news distribution via SRT. $1.59M in HubSpot. Multi-year deal 2026–2030.',
+      '<strong>ABC NewsOne:</strong> 200+ US affiliates on Grid. Largest domestic deployment. 24/7 operation.',
+      '<strong>CNN Newsource:</strong> International affiliate distribution. Satellite replacement reference.',
+      '<strong>Ole Communications:</strong> 857 cable headends, 7 sports channels. LatAm satellite replacement.',
+      '<strong>Jordan Media City (JMC):</strong> Grid → MediaHub → SRT. Zixi displacement. Full architecture proof.',
+      '<strong>Televisa:</strong> La Casa de los Famosos — 8-channel live reality. 3rd consecutive year. Televisa/Univision.',
+    ],
+    kw:'proof points references reuters abc newsone cnn ole communications jmc televisa'
+  },
+  {
+    cat:'SAT', title:'Sales Next Steps — Satellite',
+    tags:[],
+    body:'5 actions post-NAB. Tag HubSpot, identify contract expiry dates, ask about radio, schedule deep-dive.',
+    details:[
+      '1. Tag all satellite-related deals in HubSpot with VCP = "Satellite Replacement"',
+      '2. Download Sales Playbook template from Slack and fill in for target accounts',
+      '3. Identify satellite contract expiry dates — this determines migration window',
+      '4. Ask every customer: "Do you also distribute radio via satellite?"',
+      '5. Schedule deep-dive with manager for deal strategy and pricing approval',
+      'Questions → rafael.castillo@tvunetworks.com',
+    ],
+    kw:'next steps satellite hubspot playbook contract expiry radio pricing'
+  },
+
+  // ─── PRODUCT ────────────────────────────────────────────────────────────
+  {
+    cat:'PRODUCT', title:'Transmission Family Update',
+    tags:['new'],
+    body:'TM1100 supports multi-channel (RPS One). TE5800 new with RPS Link 4-ch. New RPS Decoder models. TM1000V4 = no multi-ch upgrade.',
+    details:[
+      '<strong>TM1000V4 (Portable):</strong> TVU One · No multi-ch upgrade · Decoder: Transceiver',
+      '<strong>TM1100 (Portable):</strong> TVU One · Multi-channel ✓ · Software: RPS One · Decoder: Transceiver',
+      '<strong>TE5500 / TE5700 (Rack):</strong> MLink · No multi-ch upgrade',
+      '<strong>TE5800 (Rack) — NEW:</strong> MLink · Multi-channel ✓ · RPS Link 4-ch (New) · 4K 50/60P version · 1x 12G-SDI or 4x 3G-SDI inputs',
+      '<strong>RPS 4/6-ch (Rack) — NEW:</strong> RPS 4-ch or 6-ch · Transceiver or RPS Decoder (New)',
+      '<strong>RPS Link 4/6-ch (Rack) — NEW:</strong> RPS Link 4-ch or 6-ch · Transceiver or RPS Decoder (New)',
+    ],
+    kw:'tm1000 tm1100 te5800 rps mlink transmission family hardware new models'
+  },
+  {
+    cat:'PRODUCT', title:'Geniox eSIMs — Global Connectivity',
+    tags:['new','latam'],
+    body:'Local SIM rates everywhere. No border SIM swaps. Already in TM1000v4 + TM1100. Worldwide Data Calculator for quotes.',
+    details:[
+      '<strong>Works like a local SIM everywhere:</strong> TVU packs automatically connect to local carriers — no weak roaming signals, no dropped streams.',
+      '<strong>Eliminates roaming charges:</strong> Customers pay local rates regardless of location.',
+      '<strong>Zero hassle for crew:</strong> No SIM swaps at borders — automatic in background.',
+      '<strong>Already in new hardware:</strong> TM1000v4 + TM1100 ship with Geniox-supporting modem. Also supported in older TM1000V3 and RPS Link with Quectel RM520.',
+      '<strong>Pricing tool:</strong> Worldwide Data Calculator → build accurate data plan quotes for multi-region customers.',
+      '<strong>Booth:</strong> Geniox present in TVU booth · stickers on display.',
+    ],
+    kw:'geniox esim roaming local sim connectivity tm1000 tm1100 worldwide data calculator'
+  },
+  {
+    cat:'PRODUCT', title:'StarLink Backpack Mount',
+    tags:['new'],
+    body:'Unlimited IRL accessory mount for TM1000/1100. +30Mb/s uplink. Powered by TVU PowerPack USB-C. Removable velcro.',
+    details:[
+      'Partners at Unlimited IRL developed the mount for latest gen TM1000/1100.',
+      '<strong>Adds up to 30Mb/s uplink</strong> to any Pack — even in most remote outdoor locations.',
+      'Works with existing current-gen backpacks — removable with velcro mount.',
+      'Power StarLink Mini directly via USB-C port on TVU PowerPack battery.',
+    ],
+    kw:'starlink backpack mount tm1000 tm1100 uplink remote outdoor unlimited irl'
+  },
+  {
+    cat:'PRODUCT', title:'TVU Tally — Camera Integration',
+    tags:['new'],
+    body:'Plug & play tally for TVU transmitters supporting VLAN tunnel. Up to 128 lamps. $1,100. Supports Ross, GV, Blackmagic, DataVideo.',
+    details:[
+      '<strong>Simple Camera Tally:</strong> Plug and Play for TVU Transmitters supporting VLAN tunnel.',
+      '<strong>Virtualized Tally Station</strong> in both Transceiver and Producer — no separate hardware needed.',
+      '<strong>Direct Lamp Integration:</strong> TVU One / RPS One. Up to 128 lamps per setup.',
+      '<strong>Broad support:</strong> Ross, Grass Valley, Blackmagic, DataVideo, and more.',
+      '<strong>Price: US$1,100</strong>',
+    ],
+    kw:'tally camera lamp 128 ross blackmagic grass valley datavideo price 1100'
+  },
+  {
+    cat:'PRODUCT', title:'Live Production Assistance — AI Tools',
+    tags:['new'],
+    body:'AI Chat Companion inside Producer. Voice commands. Control via Slack/WhatsApp. Digital Assistant MicroApp coming.',
+    details:[
+      '<strong>AI Chat Companion:</strong> Chat tool inside Producer — works alongside operator. Type or voice.',
+      '<strong>Natural language commands:</strong> "Take camera 3" or "insert lower third and change name to Mateus Domingues" — done instantly.',
+      '<strong>Control via Messaging Apps:</strong> Launch, monitor, control TVU sessions via Slack or WhatsApp. Integrates with TVU API.',
+      '<strong>Digital Assistant MicroApp (coming):</strong> Dedicated microapp for configuring and launching recurring productions from simple interface.',
+    ],
+    kw:'ai chat companion live production voice commands slack whatsapp digital assistant'
+  },
+  {
+    cat:'PRODUCT', title:'TVU Producer — Multi-Layer Graphics',
+    tags:['new'],
+    body:'No single graphics layer limit. Combine Singular, Flowics, native graphics independently. MicroApp split coming.',
+    details:[
+      'Create and combine <strong>multiple layers of graphics</strong> in a single production.',
+      'Independent Layer Control — define and manage each layer separately.',
+      'Combine multiple HTML overlay packages (Singular, Flowics) alongside native graphics.',
+      '<strong>Coming:</strong> Graphics overlay splitting into its own standalone microapp (e.g. SRT in → overlay graphics → SRT out).',
+    ],
+    kw:'producer multi-layer graphics singular flowics html overlay microapp'
+  },
+  {
+    cat:'PRODUCT', title:'Remote Commentator — Redundancy',
+    tags:['new'],
+    body:'Source-level AND production-level redundancy. Geographic regional backup. Seamless main-to-backup switching.',
+    details:[
+      '<strong>Built-In Redundancy:</strong> Source-level + production-level — full safety net across entire signal chain.',
+      '<strong>Flexible Regional Backup:</strong> Productions assigned to different regions for geographic redundancy (e.g. South America São Paulo).',
+      '<strong>Seamless Switching:</strong> Instantly switch main ↔ backup with no disruption to on-air commentary feed.',
+    ],
+    kw:'remote commentator redundancy backup regional geographic production level source'
+  },
+
+  // ─── MICROAPPS ──────────────────────────────────────────────────────────
+  {
+    cat:'MICROAPPS', title:'MicroApps Pricing — Current Suite',
+    tags:[],
+    body:'6 microapps available. Media Analyzer FREE for Pro. Standards Converter $2/min (Reg). AI Transcriber 5¢/min (Pro).',
+    details:[
+      '<strong>Media Analyzer</strong> — IP Stream Analyzer, Waveform Monitor, Vectorscope: Reg 20¢/min · <strong>Pro: FREE</strong>',
+      '<strong>Standards Converter</strong> — IP Stream Frame-Blended: Reg $2/min · Pro 50¢/min',
+      '<strong>Transcriber</strong> — AI Closed Caption Tool: Reg 20¢/min · Pro 5¢/min',
+      '<strong>Audio Remap</strong> — IP Stream Audio Channel Remapping: Reg 20¢/min · Pro 5¢/min',
+      '<strong>SCTE Inserter</strong> — IP Stream SCTE Inserter: Reg 20¢/min · Pro 5¢/min',
+      '<strong>A/V Sync</strong> — Audio/Video Sync Adjustment: Reg 20¢/min · Pro 5¢/min',
+    ],
+    kw:'microapps pricing media analyzer standards converter transcriber audio remap scte sync'
+  },
+  {
+    cat:'MICROAPPS', title:'New MicroApps — Prompter + Test Pattern',
+    tags:['new'],
+    body:'AI Prompter (auto-scroll speed control) + Test Pattern Generator (UHD/HD/SD any format). Shared Memory as input for ALL microapps — new.',
+    details:[
+      '<strong>Prompter:</strong> Basic web-based self-service teleprompter. AI speed control monitors reader progress and auto-manages scrolling.',
+      '<strong>Test Pattern Generator:</strong> Generate test patterns in any UHD/HD/SD format, any frame rate. Output as Media Object. Compatible with TVU ecosystem. Add audio tone or text overlay for ID.',
+      '<strong>🆕 Shared Memory as input for ALL microapps</strong> — major new capability announced at NAB.',
+    ],
+    kw:'microapps prompter teleprompter test pattern generator shared memory input'
+  },
+
+  // ─── SEARCH / DISCOVERY ─────────────────────────────────────────────────
+  {
+    cat:'PRODUCT', title:'TVU Search — Intelligent Command Bar',
+    tags:['new'],
+    body:'One bar. Find anything, trigger anything. Route feeds, start recordings, create clips with single command. Always-on inside Producer/Channel.',
+    details:[
+      '<strong>Unified Command Bar:</strong> Accessible from anywhere in the platform — no menus, no app switching. Just type and go.',
+      '<strong>Instant Asset Discovery:</strong> Find any live source, recording or clip across entire platform in seconds.',
+      '<strong>One-Step Live Control:</strong> Route feeds, start recordings, create clips with a single command during live production.',
+      '<strong>Speed Over Process:</strong> Collapses multiple clicks into a single fast interaction — operators stay focused on the moment.',
+      '<strong>Always On:</strong> Docks inside Producer or Channel without interrupting workflow.',
+    ],
+    kw:'search command bar discovery asset route recordings clips producer channel'
+  },
+  {
+    cat:'PRODUCT', title:'Search — Sponsorship Verification (AI)',
+    tags:['new'],
+    body:'Auto-tracks logo appearances, verbal mentions, jersey numbers. Exportable CSV/XLSX reports with timestamps + confidence scores.',
+    details:[
+      '<strong>AI-Powered:</strong> Automatically tracks every sponsor mention, logo appearance and on-screen graphic during live broadcast.',
+      '<strong>Tracks:</strong> Spoken mentions · on-screen logos · jersey numbers — grouped by sponsor, matched against contract.',
+      '<strong>Instant Exportable Reports:</strong> CSV or XLSX with timestamps, duration, detected phrases and confidence scores.',
+      '<strong>Closes the Loop:</strong> Quantifiable proof every contracted placement was delivered — protects relationships, reduces disputes.',
+      '<strong>Fuels Renewals:</strong> Turn verified delivery data into compelling story for sponsors — easier renewal + upsell conversations.',
+      '<strong>NAB Demo:</strong> Scripps Sports content.',
+    ],
+    kw:'sponsorship verification ai logo detection verbal mentions jersey csv report confidence scripps'
+  },
+  {
+    cat:'PRODUCT', title:'Search — Auto Clipping (AI-Driven)',
+    tags:['new'],
+    body:'Define clipping rules in plain language. Speech-to-text + face detection + metadata + custom rules. Real-time highlights. Digital channels instantly.',
+    details:[
+      '<strong>AI Prompt Builder:</strong> Define rules in plain language — TVU Search does the rest. No manual editing, no post-production delays.',
+      '<strong>Configurable Intelligence:</strong> Combine speech-to-text, face detection, metadata, and custom rules. Configured once, runs continuously.',
+      '<strong>Real-Time Highlight Generation:</strong> Clips created and published automatically as content airs.',
+      '<strong>Instant Digital Channel Creation:</strong> Auto-package clips into always-on highlight channels from existing long-form programming.',
+      '<strong>Turn Libraries into Revenue:</strong> Repurpose live + archived content into scalable, monetizable digital channels — zero manual effort.',
+      '<strong>NAB Demo:</strong> VSiN content (Sports Gambling Network).',
+    ],
+    kw:'auto clipping ai highlights digital channel speech face detection vsin'
+  },
+  {
+    cat:'PRODUCT', title:'Search — Bib Detection & Identity',
+    tags:['new'],
+    body:'Detects bib numbers + faces + logos from live footage. Links athlete identity to exact video moment. Built for marathons, large events.',
+    details:[
+      '<strong>Visual Number Recognition:</strong> Detects bib numbers, faces, logos across live event footage — links to athlete/entity data. No manual logging.',
+      '<strong>Find Any Athlete Instantly:</strong> Search by bib number, face or brand logo → jump to exact video moment across any live or recorded feed.',
+      '<strong>Large-Scale Events:</strong> Built for marathons, high-volume sports (tracking hundreds of athletes manually impossible).',
+      '<strong>Identity Layers:</strong> Links athlete + bib number + sponsor automatically — complete picture in single search.',
+      '<strong>Highlight Acceleration:</strong> Surface every appearance of any athlete or brand in seconds (vs hours manually).',
+      '<strong>NAB Demo:</strong> Boston Marathon content.',
+    ],
+    kw:'bib detection identity face recognition athlete brand sponsor marathon boston search'
+  },
+
+  // ─── PLAYOUT ────────────────────────────────────────────────────────────
+  {
+    cat:'PLAYOUT', title:'TVU Channel — On-Prem & BYOC',
+    tags:['new'],
+    body:'Full TVU Channel now deployable on customer\'s own infrastructure or BYOC (Azure, Linode, Google Cloud). Same features, dramatically lower cost.',
+    details:[
+      '<strong>On-Prem option:</strong> TVU VS3500 Receiver (4K/multi-stream + hardware decode) + NAS Storage + TVU Channel Docker + Output/Distribution.',
+      '<strong>BYOC option:</strong> Azure / Linode / Google Cloud · Cloud Storage (blob) · TVU Channel Docker · Output via CDN on customer account.',
+      '<strong>Dramatically Lower Costs:</strong> Customer\'s own storage, compute, egress — significant savings vs cloud-hosted model.',
+      '<strong>New Market Opportunities:</strong> VOD-only channels, regional deployments, competitive markets where cloud-hosted pricing was a barrier.',
+      '<strong>Zero Feature Compromise:</strong> Live Playout · VOD Scheduling · Graphics & CG · Ad Insertion · Multi-Channel.',
+      '<strong>Coming:</strong> Badgerland Sports RSN launching August 1st on this model.',
+    ],
+    kw:'tvuchannel on-prem byoc azure linode google cloud docker vod playout cost badgerland'
+  },
+  {
+    cat:'PLAYOUT', title:'TVU Channel — Increased Flexibility',
+    tags:['new'],
+    body:'Ad Slate Scheduling · Customizable UI · Up to 3 Auxiliary Outputs · Red Dot SCTE triggering · AI traffic import.',
+    details:[
+      '<strong>Ad Slate Playlist Scheduling:</strong> Sequential or shuffle playback · SCTE triggering · live ad capability · client-side ad serving — all included at no extra cost.',
+      '<strong>Customizable Playout UI:</strong> Fully resizable, repositionable panels with optional toggle controls.',
+      '<strong>Auxiliary Outputs (up to 3):</strong> Each carries own ad insertion, EPG, audio mute, source switching. Flexible pricing per output.',
+      '<strong>Red Dot Detection:</strong> Monitors stream → auto-injects SCTE start/stop commands on red dot. Zero impact on existing metadata or pass-through SCTE.',
+      '<strong>AI Traffic Import Tool:</strong> MediaLab experimental — automatically translates traffic.',
+    ],
+    kw:'channel ad slate scheduling auxiliary outputs red dot scte flexibility ui customizable traffic'
+  },
+
+  // ─── LATAM SPECIFIC ─────────────────────────────────────────────────────
+  {
+    cat:'LATAM', title:'LATAM Sales Strategy — NAB 2026',
+    tags:['latam','hot'],
+    body:'3 conversations for LATAM: Satellite Replacement, MediaMesh ecosystem upgrade, Sports (EVS+Lawo for Televisa/Caracol/FMF).',
+    details:[
+      '<strong>Satellite Replacement:</strong> Main pitch for broadcasters, cable MSOs. Reference: Ole (857 headends) + Televisa. Always compare to HD upgrade cost.',
+      '<strong>MediaMesh Ecosystem:</strong> "Ya tienes hardware TVU. MediaMesh abre un ecosistema enterprise sin cambiar tu infraestructura." Target existing TVU clients.',
+      '<strong>Sports Production:</strong> EVS+TVU for Televisa, Caracol (replay + remote production). Lawo audio for FMF, Media Pro (live sports). Vela monitoring for Claro Sports, IM Sports.',
+      '<strong>Geniox eSIMs:</strong> Major value prop for LATAM — eliminates cross-border roaming. Key for news teams and sports crews moving between countries.',
+      '<strong>FIFA World Cup 2026:</strong> ESPN Gold Cup workflow deploys at FIFA WC — massive opportunity for LATAM broadcasters to upgrade now.',
+      '<strong>Key accounts:</strong> Televisa · Caracol · FMF · Media Pro · Claro Sports · IM Sports · Ole Communications.',
+    ],
+    kw:'latam mexico colombia venezuela televisa caracol fmf media pro claro sports im sports ole fifa'
+  },
+
+  // ─── MARKETING ──────────────────────────────────────────────────────────
+  {
+    cat:'MARKETING', title:'Press Pipeline at NAB',
+    tags:[],
+    body:'4 press announcements: GV+TVU, TVU Innovation, Ole Broadcasting, Reuters Satellite Migration.',
+    details:[
+      '<strong>This week:</strong> "TVU Networks and Grass Valley Partner to Enable Seamless Cloud Production Interoperability with AMPP and TVU MediaMesh"',
+      '<strong>Next week:</strong> "TVU Innovation — focus on human-centric agentic assisted workflows"',
+      '<strong>Live:</strong> "Ole Broadcasting Advances Strategic Transition from Satellite to IP with TVU MediaHub" — 27 MSOs in Latin America.',
+      '<strong>Live:</strong> "Reuters begins the Satellite-to-IP Migration. A New Foundation for Live News Distribution." — TVU MediaHub + TVU NOC.',
+    ],
+    kw:'press announcements grass valley gv ole broadcasting reuters pr marketing'
+  },
+  {
+    cat:'MARKETING', title:'Lead Stats & Ranking',
+    tags:[],
+    body:'Overall Rank: 96th percentile (45th out of 1,153 exhibitors). 800 views · 53 leads · 32 clicks pre-NAB.',
+    details:[
+      '800 views · 53 leads · 32 clicks on online listing.',
+      'Overall Rank: 96% — 45th out of 1,153 exhibitors in total visits.',
+      'Reuters demand gen strategy: "Private Reuters Briefings" (limited availability) · 5–10 key accounts per region · 1:1 outreach.',
+      'Target contacts: Engineering, editorial leadership, business & strategy leaders, content distribution. Extend beyond marketing → CTOs / Heads of Engineering.',
+      'Prioritize quality over volume. Use existing deals as conversation accelerators.',
+    ],
+    kw:'lead stats ranking exhibitors views clicks marketing demand gen'
+  },
+];
+
+// ── STATE ──────────────────────────────────────────────────────────────
+let activeTab = 'ALL';
+let query = '';
+
+// ── COLORS ────────────────────────────────────────────────────────────
+const COLOR_MAP = {
+  LOGISTICS: C.LOGISTICS, PITCH: C.PITCH, SPORTS: C.SPORTS,
+  REUTERS: C.REUTERS, SAT: C.SAT, PRODUCT: C.PRODUCT,
+  MICROAPPS: C.MICROAPPS, PLAYOUT: C.PLAYOUT,
+  MARKETING: C.MARKETING, LATAM: C.LATAM,
+};
+
+function catColor(cat){ return COLOR_MAP[cat] || '#00c2ff'; }
+
+// ── TABS ──────────────────────────────────────────────────────────────
+function buildTabs(){
+  const cats = ['ALL', ...new Set(DATA.map(d=>d.cat))];
+  const el = document.getElementById('tabs');
+  el.innerHTML = '';
+  cats.forEach(cat=>{
+    const b = document.createElement('button');
+    b.className = 'tab' + (activeTab===cat?' active':'');
+    b.textContent = cat === 'SAT' ? 'SATELLITE' : cat;
+    b.onclick = ()=>{
+      activeTab = cat;
+      document.getElementById('banner').style.display =
+        (cat==='ALL'||cat==='PITCH') ? '' : 'none';
+      buildTabs(); render();
+    };
+    el.appendChild(b);
+  });
+}
+
+// ── HIGHLIGHT ─────────────────────────────────────────────────────────
+function hl(str, q){
+  if(!q) return str;
+  const re = new RegExp('('+q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')','gi');
+  return str.replace(re,'<span class="hl">$1</span>');
+}
+
+// ── TABLE ─────────────────────────────────────────────────────────────
+function buildTable(td){
+  let h = '<table class="mini-table"><thead><tr>';
+  td.heads.forEach((th,i)=>{ h+=`<th>${i===0?'':th}</th>`; });
+  h+='</tr></thead><tbody>';
+  td.rows.forEach(r=>{
+    h+='<tr>';
+    r.forEach((cell,i)=>{
+      let cls='';
+      if(i>0){
+        if(cell.includes('<1 sec')||cell.includes('1–3 days')||cell.includes('Ad region')) cls=' class="good"';
+        if(cell.includes('None')||cell.includes('5–15 min')||cell.includes('2–4 weeks')) cls=' class="bad"';
+      }
+      h+=`<td${cls}>${cell}</td>`;
+    });
+    h+='</tr>';
+  });
+  h+='</tbody></table>';
+  return h;
+}
+
+// ── RENDER ────────────────────────────────────────────────────────────
+function render(){
+  const grid = document.getElementById('grid');
+  const empty = document.getElementById('empty');
+  grid.innerHTML='';
+  const q = query.toLowerCase().trim();
+
+  const items = DATA.filter(d=>{
+    if(activeTab!=='ALL' && d.cat!==activeTab) return false;
+    if(!q) return true;
+    const blob = [d.title, d.body, d.kw||'', ...(d.details||[])].join(' ').toLowerCase();
+    return q.split(' ').every(w=>blob.includes(w));
+  });
+
+  document.getElementById('cnt').textContent = items.length + ' items';
+  empty.style.display = items.length?'none':'block';
+
+  items.forEach(d=>{
+    const col = catColor(d.cat);
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.style.setProperty('--c', col);
+
+    // tags
+    const tagHTML = (d.tags||[]).map(t=>{
+      const cls = t==='latam'?'tag-latam':t==='new'?'tag-new':t==='hot'?'tag-hot':'tag-poc';
+      const label = t==='latam'?'🌎 LATAM':t==='new'?'✦ NEW':t==='hot'?'⚡ HOT':'◎ POC';
+      return `<span class="tag ${cls}">${label}</span>`;
+    }).join('');
+
+    // details html
+    let detailsHTML = '';
+    if(d.details){
+      detailsHTML = `<div class="card-extra">
+        ${d.tableData ? buildTable(d.tableData) : ''}
+        <ul>${d.details.map(det=>`<li>${det}</li>`).join('')}</ul>
+      </div><div class="hint">tap to expand ↓</div>`;
+    }
+
+    card.innerHTML = `
+      <div class="cat-row">
+        <span class="cat-pill">${d.cat==='SAT'?'SATELLITE':d.cat}</span>
+        ${tagHTML}
+      </div>
+      <div class="card-title">${hl(d.title, q)}</div>
+      <div class="card-body">${hl(d.body, q)}</div>
+      ${detailsHTML}
+    `;
+    card.onclick = ()=> card.classList.toggle('open');
+    grid.appendChild(card);
+  });
+}
+
+// ── INIT ──────────────────────────────────────────────────────────────
+document.getElementById('q').addEventListener('input', e=>{
+  query = e.target.value;
+  render();
+});
+
+buildTabs();
+render();
+</script>
+</body>
+</html>
