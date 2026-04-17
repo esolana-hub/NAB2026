@@ -1,0 +1,560 @@
+import { useState } from "react";
+
+const studyData = {
+  sections: [
+    {
+      id: "positioning",
+      title: "Posicionamiento General TVU",
+      icon: "📡",
+      concepts: [
+        {
+          term: "One-liner de TVU",
+          definition: "TVU Networks es el socio confiable que ayuda a broadcasters, organizaciones deportivas y creadores de contenido a navegar el futuro de los medios impulsado por IA — con plataforma, experiencia y visión para avanzar con confianza."
+        },
+        {
+          term: "Los 3 pilares de TVU",
+          definition: "1) Experiencia profunda en producción en vivo · 2) Plataforma impulsada por IA · 3) Las integraciones estratégicas más relevantes de la industria."
+        },
+        {
+          term: "Tres perfiles de cliente objetivo",
+          definition: "1) Broadcasters con workflows complejos de transmisión en vivo · 2) Organizaciones deportivas que empujan el fan engagement · 3) Empresas de medios en transición a operaciones cloud-native."
+        },
+        {
+          term: "Mensaje central de la era actual",
+          definition: "IA, cloud, deportes en vivo y la economía creadora están convergiendo — creando oportunidad real pero también presión real para tomar decisiones tecnológicas correctas en el momento correcto."
+        }
+      ]
+    },
+    {
+      id: "mediamesh",
+      title: "MediaMesh — Core Platform",
+      icon: "🔗",
+      concepts: [
+        {
+          term: "MediaMesh One-liner",
+          definition: "TVU construyó la tecnología de transmisión de video en vivo más confiable del mundo — MediaMesh extiende esa misma tecnología a toda la cadena de medios en vivo, desde la contribución de campo hasta la producción y distribución, en una sola plataforma orquestada."
+        },
+        {
+          term: "¿Qué es MediaMesh?",
+          definition: "Plataforma que conecta cualquier fuente, procesa video en vivo (switching, encoding, distribución) y orquesta todo automáticamente en entornos cloud y on-premises. Equipos que antes tardaban semanas en desplegar un workflow ahora lo hacen en horas, sin recursos de ingeniería profundos."
+        },
+        {
+          term: "Clientes referenciales de MediaMesh",
+          definition: "HBS y DAZN (Copa del Mundo de Clubes) · ABC News One · CNN News Source · France TV · Tokyo Broadcasting Service · BBC (cobertura de elecciones nacionales)."
+        },
+        {
+          term: "Novedad en NAB 2026",
+          definition: "Se presentan por primera vez las MediaMesh Platform Tools — diseño visual de workflows por drag-and-drop de microservicios, con observabilidad en tiempo real de cada señal. También es la plataforma que impulsa TVU MediaHub y TVU Search."
+        },
+        {
+          term: "Propuesta de valor clave",
+          definition: "No es un rip-and-replace. Trabaja junto a la infraestructura existente. Cambia la velocidad de despliegue, la visibilidad operativa y el esfuerzo de ingeniería necesario para mantener todo funcionando."
+        }
+      ]
+    },
+    {
+      id: "objections",
+      title: "Manejo de Objeciones",
+      icon: "🥊",
+      concepts: [
+        {
+          term: "\"Ya tenemos infraestructura\"",
+          definition: "MediaMesh no reemplaza — trabaja junto a lo que ya tienen. El valor está en velocidad de despliegue de nuevos workflows, visibilidad operativa cuando algo falla, y menos esfuerzo de ingeniería para mantenerlo."
+        },
+        {
+          term: "\"¿En qué se diferencia de AWS Media Services?\"",
+          definition: "AWS es excelente para workflows file-based y streaming a escala. MediaMesh es para live — donde latencia y confiabilidad en tiempo real importan de verdad. A diferencia de AWS, permite traer contenedores de terceros y mezclarlos con servicios TVU en un ambiente orquestado. MediaConnect es el más cercano pero con procesamiento muy limitado; TVU hace conectividad + todo lo que pasa a la señal después."
+        },
+        {
+          term: "\"¿En qué se diferencia de GV AMPP?\"",
+          definition: "GV AMPP es excelente para herramientas de producción en vivo (switchers, gráficos). MediaMesh es más amplio: cubre contribución de campo hasta distribución, y gestiona recursos dinámicamente bajo demanda. Es la capa de infraestructura que conecta y orquesta todo, incluyendo herramientas como AMPP si se desea."
+        },
+        {
+          term: "\"¿Cómo se ve en la práctica?\"",
+          definition: "Visitar el booth: se muestra MediaMesh Platform Tools en vivo — drag-and-drop de microservicios, ejecución en tiempo real con observabilidad completa de cada señal. Es fácil de ver, difícil de describir."
+        },
+        {
+          term: "Objeción de confiabilidad / incidentes 2025",
+          definition: "Respuesta directa: la tecnología de conectividad (packs TVU, TVU Grid) tiene historial sólido. En la plataforma de software, hubo desafíos operacionales en 2025 — fueron transparentes con clientes afectados. Cambios significativos en ingeniería y despliegue. La nueva herramienta de observabilidad en NAB es la prueba más visible de ese progreso."
+        }
+      ]
+    },
+    {
+      id: "strategy",
+      title: "Estrategia de Conversación",
+      icon: "🎯",
+      concepts: [
+        {
+          term: "Principio de apertura",
+          definition: "Los opens más fuertes son outcome-first — lidera con qué cambia para el equipo del cliente, luego gana la profundidad técnica. Guarda la conversación de arquitectura para cuando ellos se inclinen hacia adelante (lean in)."
+        },
+        {
+          term: "Leave-behind line",
+          definition: "\"TVU siempre ha sido la empresa de conectividad — desde el dispositivo en el borde de la red hasta el workflow en la nube al otro lado. MediaMesh es cómo se ve eso como plataforma unificada. Conectado, procesado, entregado. En vivo.\""
+        },
+        {
+          term: "Contexto del show",
+          definition: "NAB 2026 — industria evolucionando a ritmo sin precedentes. IA, cloud, streaming de deportes en vivo y economía creadora convergiendo. Presión para tomar decisiones tecnológicas correctas en el momento correcto."
+        }
+      ]
+    }
+  ]
+};
+
+const examQuestions = [
+  {
+    id: 1,
+    section: "Posicionamiento",
+    question: "¿Cuáles son los 3 pilares de TVU Networks según el mensaje de NAB 2026?",
+    options: [
+      "Hardware, software y soporte técnico",
+      "Experiencia en producción en vivo, plataforma impulsada por IA, e integraciones estratégicas",
+      "Conectividad celular, cloud y distribución",
+      "Field transmission, encoding y analytics"
+    ],
+    correct: 1,
+    explanation: "Los 3 pilares son: experiencia profunda en producción en vivo + plataforma impulsada por IA + las integraciones estratégicas más relevantes de la industria."
+  },
+  {
+    id: 2,
+    section: "MediaMesh",
+    question: "¿Qué diferencia clave tiene MediaMesh vs AWS Media Services?",
+    options: [
+      "MediaMesh es más barato que AWS",
+      "AWS no soporta video en vivo",
+      "MediaMesh está construido específicamente para live, donde latencia y confiabilidad en tiempo real importan, y permite mezclar contenedores de terceros con servicios TVU",
+      "MediaMesh funciona solo on-premises, AWS solo en cloud"
+    ],
+    correct: 2,
+    explanation: "AWS es excelente para file-based y streaming a escala. MediaMesh es para live — latencia real. Y permite traer contenedores de terceros mezclados con servicios TVU en un ambiente orquestado."
+  },
+  {
+    id: 3,
+    section: "Objeciones",
+    question: "Un prospecto dice: \"Ya tenemos infraestructura, no necesitamos cambiar nada.\" ¿Cuál es la respuesta correcta?",
+    options: [
+      "Explicar que MediaMesh reemplaza todo lo anterior con mejor tecnología",
+      "Preguntar qué infraestructura tienen para evaluar compatibilidad",
+      "MediaMesh no es un rip-and-replace — trabaja junto a lo que ya tienen, cambiando velocidad de despliegue, visibilidad operativa y esfuerzo de ingeniería",
+      "Mencionar que los competidores ya migraron y ellos se quedarán atrás"
+    ],
+    correct: 2,
+    explanation: "MediaMesh NO es rip-and-replace. El valor está en velocidad de nuevos workflows, visibilidad operativa y reducción del esfuerzo de ingeniería — sobre la infraestructura existente."
+  },
+  {
+    id: 4,
+    section: "Clientes",
+    question: "¿Cuáles de estos clientes usan MediaMesh para cobertura de elecciones nacionales?",
+    options: [
+      "ESPN y Telemundo",
+      "BBC y France TV",
+      "NBC y CBS",
+      "Sky News y Al Jazeera"
+    ],
+    correct: 1,
+    explanation: "BBC y France TV (además de Tokyo Broadcasting Service) usan MediaMesh para cobertura de elecciones nacionales. HBS y DAZN lo usan para el Club World Cup."
+  },
+  {
+    id: 5,
+    section: "MediaMesh",
+    question: "¿Cuánto tiempo tarda ahora un equipo en desplegar un workflow en vivo con MediaMesh vs antes?",
+    options: [
+      "Días vs meses",
+      "Horas vs semanas",
+      "Minutos vs días",
+      "Semanas vs años"
+    ],
+    correct: 1,
+    explanation: "Con MediaMesh, equipos que antes tardaban semanas en diseñar y desplegar un workflow ahora lo hacen en horas, sin recursos de ingeniería profundos."
+  },
+  {
+    id: 6,
+    section: "Estrategia",
+    question: "¿Cuál es el principio de apertura más efectivo en conversaciones de trade show según el documento?",
+    options: [
+      "Empezar con las especificaciones técnicas de la plataforma",
+      "Mencionar primero a los clientes de referencia como HBS y BBC",
+      "Opens outcome-first — lidera con qué cambia para el equipo del cliente, luego gana la profundidad técnica",
+      "Hacer preguntas de calificación antes de hablar de producto"
+    ],
+    correct: 2,
+    explanation: "\"Los opens más fuertes son outcome-first — lidera con qué cambia para el equipo del cliente, luego gana la profundidad técnica. Guarda la arquitectura para cuando lean in.\""
+  },
+  {
+    id: 7,
+    section: "Objeciones",
+    question: "¿Cómo se diferencia MediaMesh de GV AMPP?",
+    options: [
+      "GV AMPP no soporta producción en vivo; MediaMesh sí",
+      "MediaMesh es más barato que GV AMPP",
+      "GV AMPP es excelente para herramientas de producción; MediaMesh es más amplio cubriendo contribución hasta distribución con recursos dinámicos bajo demanda — es la capa de infraestructura que orquesta todo",
+      "Son prácticamente iguales en funcionalidades"
+    ],
+    correct: 2,
+    explanation: "GV AMPP = herramientas de producción (switchers, gráficos). MediaMesh = capa de infraestructura más amplia, contribución→distribución, recursos dinámicos bajo demanda. Puede orquestar AMPP si el cliente lo desea."
+  },
+  {
+    id: 8,
+    section: "Confiabilidad",
+    question: "Un cliente menciona que oyó sobre problemas operacionales de TVU en 2025. ¿Cómo debes responder?",
+    options: [
+      "Negar los problemas y cambiar el tema",
+      "Admitir solo si el cliente insiste",
+      "Responder directamente: historial sólido en conectividad (packs/Grid), problemas 2025 fueron reales y fueron transparentes con afectados, cambios significativos realizados, la nueva herramienta de observabilidad en NAB es la prueba más visible del progreso",
+      "Culpar a factores externos y explicar que ya están resueltos"
+    ],
+    correct: 2,
+    explanation: "\"Prefiero abordarlo directamente en lugar de esquivarlo.\" Historial sólido en conectividad → desafíos 2025 reales → transparencia con clientes → cambios en ingeniería/despliegue → nueva herramienta de observabilidad en NAB como prueba."
+  },
+  {
+    id: 9,
+    section: "NAB 2026",
+    question: "¿Qué se presenta POR PRIMERA VEZ en NAB 2026?",
+    options: [
+      "Los backpacks celulares TM1000",
+      "TVU MediaHub y TVU Search",
+      "MediaMesh Platform Tools — diseño visual de workflows por drag-and-drop con observabilidad en tiempo real",
+      "Integración con AWS MediaConnect"
+    ],
+    correct: 2,
+    explanation: "Las MediaMesh Platform Tools se muestran por primera vez en NAB 2026: drag-and-drop de microservicios para diseñar workflows, ejecución en tiempo real con observabilidad completa de cada señal."
+  },
+  {
+    id: 10,
+    section: "Leave-behind",
+    question: "¿Cuál es la 'leave-behind line' oficial de MediaMesh?",
+    options: [
+      "\"TVU: el futuro del broadcasting está aquí.\"",
+      "\"TVU siempre ha sido la empresa de conectividad — desde el dispositivo en el borde de la red hasta el workflow en la nube al otro lado. MediaMesh es cómo se ve eso como plataforma unificada. Conectado, procesado, entregado. En vivo.\"",
+      "\"La plataforma que eligen los mejores broadcasters del mundo.\"",
+      "\"IA, cloud y live — todo en uno.\""
+    ],
+    correct: 1,
+    explanation: "La leave-behind line exacta: \"TVU siempre ha sido la empresa de conectividad... MediaMesh es cómo se ve eso como plataforma unificada. Conectado, procesado, entregado. En vivo.\""
+  }
+];
+
+export default function NABStudyApp() {
+  const [mode, setMode] = useState("menu"); // menu | study | exam | results
+  const [activeSection, setActiveSection] = useState(null);
+  const [flipped, setFlipped] = useState({});
+  const [examAnswers, setExamAnswers] = useState({});
+  const [submitted, setSubmitted] = useState(false);
+  const [currentQ, setCurrentQ] = useState(0);
+
+  const score = submitted
+    ? examQuestions.filter(q => examAnswers[q.id] === q.correct).length
+    : 0;
+
+  const pct = Math.round((score / examQuestions.length) * 100);
+
+  const grade = pct >= 90 ? "A — Listo para el booth 🏆" :
+                pct >= 75 ? "B — Casi, repasa objeciones 👍" :
+                pct >= 60 ? "C — Repasa MediaMesh y diferenciadores ⚠️" :
+                            "D — Vuelta al material de estudio 🔁";
+
+  return (
+    <div style={{
+      minHeight: "100vh",
+      background: "linear-gradient(135deg, #0a0f1e 0%, #0d1b2a 50%, #0a1628 100%)",
+      fontFamily: "'Georgia', serif",
+      color: "#e8e0d0",
+      padding: "0"
+    }}>
+      {/* Header */}
+      <div style={{
+        background: "linear-gradient(90deg, #c8a84b 0%, #e8c96a 50%, #c8a84b 100%)",
+        padding: "12px 24px",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between"
+      }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+          <span style={{ fontSize: "22px" }}>📡</span>
+          <div>
+            <div style={{ fontFamily: "'Georgia', serif", fontWeight: "700", color: "#0a0f1e", fontSize: "15px", letterSpacing: "1px" }}>
+              TVU NETWORKS
+            </div>
+            <div style={{ fontSize: "11px", color: "#3a2800", letterSpacing: "2px", fontFamily: "monospace" }}>
+              NAB 2026 — GUÍA DE ESTUDIO
+            </div>
+          </div>
+        </div>
+        {mode !== "menu" && (
+          <button onClick={() => { setMode("menu"); setSubmitted(false); setExamAnswers({}); setCurrentQ(0); }}
+            style={{ background: "rgba(0,0,0,0.2)", border: "none", color: "#0a0f1e", padding: "6px 14px", borderRadius: "4px", cursor: "pointer", fontWeight: "700", fontSize: "12px" }}>
+            ← MENÚ
+          </button>
+        )}
+      </div>
+
+      <div style={{ maxWidth: "800px", margin: "0 auto", padding: "24px 16px" }}>
+
+        {/* MENU */}
+        {mode === "menu" && (
+          <div>
+            <div style={{ textAlign: "center", marginBottom: "32px" }}>
+              <div style={{ fontSize: "13px", letterSpacing: "3px", color: "#c8a84b", marginBottom: "8px", fontFamily: "monospace" }}>
+                MATERIAL DE PREPARACIÓN
+              </div>
+              <h1 style={{ fontSize: "28px", fontWeight: "700", margin: "0 0 8px", color: "#e8e0d0" }}>
+                NAB Show 2026
+              </h1>
+              <p style={{ color: "#8a9ab0", fontSize: "14px", margin: 0 }}>
+                Messaging · MediaMesh · Objeciones · Estrategia
+              </p>
+            </div>
+
+            <div style={{ display: "grid", gap: "16px", marginBottom: "32px" }}>
+              {studyData.sections.map(sec => (
+                <div key={sec.id}
+                  onClick={() => { setActiveSection(sec.id); setMode("study"); setFlipped({}); }}
+                  style={{
+                    background: "rgba(255,255,255,0.04)",
+                    border: "1px solid rgba(200,168,75,0.25)",
+                    borderRadius: "10px",
+                    padding: "18px 20px",
+                    cursor: "pointer",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "16px",
+                    transition: "all 0.2s"
+                  }}
+                  onMouseEnter={e => e.currentTarget.style.borderColor = "rgba(200,168,75,0.7)"}
+                  onMouseLeave={e => e.currentTarget.style.borderColor = "rgba(200,168,75,0.25)"}
+                >
+                  <span style={{ fontSize: "28px" }}>{sec.icon}</span>
+                  <div>
+                    <div style={{ fontWeight: "700", color: "#e8e0d0", fontSize: "15px" }}>{sec.title}</div>
+                    <div style={{ color: "#8a9ab0", fontSize: "12px", marginTop: "2px" }}>{sec.concepts.length} conceptos clave</div>
+                  </div>
+                  <div style={{ marginLeft: "auto", color: "#c8a84b", fontSize: "20px" }}>›</div>
+                </div>
+              ))}
+            </div>
+
+            <div
+              onClick={() => { setMode("exam"); setExamAnswers({}); setSubmitted(false); setCurrentQ(0); }}
+              style={{
+                background: "linear-gradient(135deg, rgba(200,168,75,0.15), rgba(200,168,75,0.05))",
+                border: "2px solid #c8a84b",
+                borderRadius: "10px",
+                padding: "22px 20px",
+                cursor: "pointer",
+                textAlign: "center"
+              }}
+            >
+              <div style={{ fontSize: "24px", marginBottom: "6px" }}>📝</div>
+              <div style={{ fontWeight: "700", color: "#c8a84b", fontSize: "16px" }}>TOMAR EXAMEN</div>
+              <div style={{ color: "#8a9ab0", fontSize: "12px", marginTop: "4px" }}>10 preguntas · todas las secciones</div>
+            </div>
+          </div>
+        )}
+
+        {/* STUDY MODE — Flashcards */}
+        {mode === "study" && activeSection && (() => {
+          const sec = studyData.sections.find(s => s.id === activeSection);
+          return (
+            <div>
+              <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "24px" }}>
+                <span style={{ fontSize: "24px" }}>{sec.icon}</span>
+                <h2 style={{ margin: 0, fontSize: "20px", color: "#e8e0d0" }}>{sec.title}</h2>
+              </div>
+              <div style={{ fontSize: "11px", color: "#8a9ab0", marginBottom: "20px", fontFamily: "monospace", letterSpacing: "1px" }}>
+                TAP PARA REVELAR DEFINICIÓN
+              </div>
+              <div style={{ display: "grid", gap: "14px" }}>
+                {sec.concepts.map((c, i) => (
+                  <div key={i}
+                    onClick={() => setFlipped(f => ({ ...f, [i]: !f[i] }))}
+                    style={{
+                      background: flipped[i]
+                        ? "rgba(200,168,75,0.1)"
+                        : "rgba(255,255,255,0.04)",
+                      border: flipped[i]
+                        ? "1px solid rgba(200,168,75,0.5)"
+                        : "1px solid rgba(255,255,255,0.08)",
+                      borderRadius: "10px",
+                      padding: "18px 20px",
+                      cursor: "pointer",
+                      transition: "all 0.25s"
+                    }}
+                  >
+                    <div style={{ fontWeight: "700", color: "#c8a84b", fontSize: "14px", marginBottom: flipped[i] ? "12px" : 0 }}>
+                      {c.term}
+                    </div>
+                    {flipped[i] && (
+                      <div style={{ color: "#d4c9b0", fontSize: "14px", lineHeight: "1.6" }}>
+                        {c.definition}
+                      </div>
+                    )}
+                    {!flipped[i] && (
+                      <div style={{ color: "#4a5a70", fontSize: "12px", marginTop: "4px", fontFamily: "monospace" }}>tap para ver →</div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+          );
+        })()}
+
+        {/* EXAM MODE */}
+        {mode === "exam" && !submitted && (() => {
+          const q = examQuestions[currentQ];
+          const answered = examAnswers[q.id] !== undefined;
+          return (
+            <div>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "20px" }}>
+                <div style={{ fontSize: "12px", fontFamily: "monospace", color: "#8a9ab0", letterSpacing: "1px" }}>
+                  PREGUNTA {currentQ + 1} / {examQuestions.length}
+                </div>
+                <div style={{ fontSize: "11px", background: "rgba(200,168,75,0.15)", color: "#c8a84b", padding: "3px 10px", borderRadius: "20px" }}>
+                  {q.section}
+                </div>
+              </div>
+
+              {/* Progress bar */}
+              <div style={{ height: "3px", background: "rgba(255,255,255,0.1)", borderRadius: "2px", marginBottom: "24px" }}>
+                <div style={{ height: "100%", width: `${((currentQ + 1) / examQuestions.length) * 100}%`, background: "#c8a84b", borderRadius: "2px", transition: "width 0.3s" }} />
+              </div>
+
+              <div style={{ fontSize: "17px", color: "#e8e0d0", lineHeight: "1.6", marginBottom: "24px", fontWeight: "600" }}>
+                {q.question}
+              </div>
+
+              <div style={{ display: "grid", gap: "10px" }}>
+                {q.options.map((opt, oi) => {
+                  const isSelected = examAnswers[q.id] === oi;
+                  return (
+                    <div key={oi}
+                      onClick={() => !answered && setExamAnswers(a => ({ ...a, [q.id]: oi }))}
+                      style={{
+                        background: isSelected ? "rgba(200,168,75,0.15)" : "rgba(255,255,255,0.04)",
+                        border: isSelected ? "1px solid #c8a84b" : "1px solid rgba(255,255,255,0.08)",
+                        borderRadius: "8px",
+                        padding: "14px 16px",
+                        cursor: answered ? "default" : "pointer",
+                        display: "flex",
+                        alignItems: "flex-start",
+                        gap: "12px",
+                        transition: "all 0.15s"
+                      }}
+                    >
+                      <div style={{
+                        width: "22px", height: "22px", borderRadius: "50%", flexShrink: 0,
+                        border: isSelected ? "2px solid #c8a84b" : "2px solid rgba(255,255,255,0.2)",
+                        background: isSelected ? "#c8a84b" : "transparent",
+                        display: "flex", alignItems: "center", justifyContent: "center",
+                        fontSize: "10px", color: isSelected ? "#0a0f1e" : "transparent", fontWeight: "900"
+                      }}>✓</div>
+                      <div style={{ fontSize: "14px", color: isSelected ? "#e8e0d0" : "#a0b0c0", lineHeight: "1.5" }}>{opt}</div>
+                    </div>
+                  );
+                })}
+              </div>
+
+              <div style={{ display: "flex", justifyContent: "flex-end", marginTop: "24px", gap: "12px" }}>
+                {currentQ < examQuestions.length - 1 ? (
+                  <button
+                    disabled={!answered}
+                    onClick={() => setCurrentQ(c => c + 1)}
+                    style={{
+                      background: answered ? "#c8a84b" : "rgba(255,255,255,0.05)",
+                      border: "none", color: answered ? "#0a0f1e" : "#4a5a70",
+                      padding: "12px 28px", borderRadius: "6px",
+                      cursor: answered ? "pointer" : "not-allowed",
+                      fontWeight: "700", fontSize: "14px", letterSpacing: "1px"
+                    }}>
+                    SIGUIENTE →
+                  </button>
+                ) : (
+                  <button
+                    disabled={Object.keys(examAnswers).length < examQuestions.length}
+                    onClick={() => setSubmitted(true)}
+                    style={{
+                      background: Object.keys(examAnswers).length >= examQuestions.length ? "#c8a84b" : "rgba(255,255,255,0.05)",
+                      border: "none",
+                      color: Object.keys(examAnswers).length >= examQuestions.length ? "#0a0f1e" : "#4a5a70",
+                      padding: "12px 28px", borderRadius: "6px",
+                      cursor: Object.keys(examAnswers).length >= examQuestions.length ? "pointer" : "not-allowed",
+                      fontWeight: "700", fontSize: "14px", letterSpacing: "1px"
+                    }}>
+                    ENVIAR EXAMEN ✓
+                  </button>
+                )}
+              </div>
+            </div>
+          );
+        })()}
+
+        {/* RESULTS */}
+        {mode === "exam" && submitted && (
+          <div>
+            <div style={{ textAlign: "center", marginBottom: "32px" }}>
+              <div style={{ fontSize: "48px", marginBottom: "8px" }}>
+                {pct >= 90 ? "🏆" : pct >= 75 ? "👍" : pct >= 60 ? "⚠️" : "🔁"}
+              </div>
+              <div style={{ fontSize: "52px", fontWeight: "900", color: "#c8a84b", lineHeight: 1 }}>
+                {pct}%
+              </div>
+              <div style={{ color: "#8a9ab0", marginTop: "4px", fontSize: "14px" }}>
+                {score} / {examQuestions.length} correctas
+              </div>
+              <div style={{
+                display: "inline-block", marginTop: "12px",
+                background: "rgba(200,168,75,0.15)", border: "1px solid rgba(200,168,75,0.4)",
+                color: "#c8a84b", padding: "6px 16px", borderRadius: "20px", fontSize: "13px", fontWeight: "600"
+              }}>
+                {grade}
+              </div>
+            </div>
+
+            <div style={{ display: "grid", gap: "14px" }}>
+              {examQuestions.map(q => {
+                const userAns = examAnswers[q.id];
+                const correct = userAns === q.correct;
+                return (
+                  <div key={q.id} style={{
+                    background: correct ? "rgba(40,180,80,0.07)" : "rgba(220,60,60,0.07)",
+                    border: `1px solid ${correct ? "rgba(40,180,80,0.3)" : "rgba(220,60,60,0.3)"}`,
+                    borderRadius: "10px", padding: "16px 18px"
+                  }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "8px" }}>
+                      <div style={{ fontSize: "12px", fontFamily: "monospace", color: "#8a9ab0" }}>P{q.id} · {q.section}</div>
+                      <div style={{ fontSize: "16px" }}>{correct ? "✅" : "❌"}</div>
+                    </div>
+                    <div style={{ fontWeight: "600", color: "#e8e0d0", fontSize: "13px", marginBottom: "8px", lineHeight: "1.5" }}>
+                      {q.question}
+                    </div>
+                    {!correct && (
+                      <div style={{ fontSize: "12px", color: "#e8a0a0", marginBottom: "6px" }}>
+                        Tu respuesta: {q.options[userAns]}
+                      </div>
+                    )}
+                    <div style={{ fontSize: "12px", color: "#70c090", marginBottom: "8px" }}>
+                      ✓ {q.options[q.correct]}
+                    </div>
+                    <div style={{ fontSize: "12px", color: "#7a8a9a", lineHeight: "1.5", borderTop: "1px solid rgba(255,255,255,0.07)", paddingTop: "8px" }}>
+                      {q.explanation}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            <div style={{ display: "flex", gap: "12px", marginTop: "24px" }}>
+              <button onClick={() => { setSubmitted(false); setExamAnswers({}); setCurrentQ(0); }}
+                style={{ flex: 1, background: "#c8a84b", border: "none", color: "#0a0f1e", padding: "14px", borderRadius: "8px", cursor: "pointer", fontWeight: "700", fontSize: "14px", letterSpacing: "1px" }}>
+                REPETIR EXAMEN
+              </button>
+              <button onClick={() => { setMode("menu"); setSubmitted(false); setExamAnswers({}); setCurrentQ(0); }}
+                style={{ flex: 1, background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.15)", color: "#e8e0d0", padding: "14px", borderRadius: "8px", cursor: "pointer", fontWeight: "700", fontSize: "14px" }}>
+                IR A ESTUDIO
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
